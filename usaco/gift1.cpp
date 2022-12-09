@@ -4,6 +4,7 @@ PROG: gift1
 LANG: C++
 */
 
+#include <bits/stdc++.h>
 #include <iostream>
 #include <fstream>
 #include <string>
