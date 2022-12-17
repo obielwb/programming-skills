@@ -3,3 +3,7 @@
 *.cpp.un~
 *.cpp.swp
 *.cpp.swo
+*.cpp.bak
+*.cpp.orig
+*.cpp.rej
+*.out
