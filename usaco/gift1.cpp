@@ -40,8 +40,13 @@ int main()
     int give, n_receivers;
     fin >> give >> n_receivers;
 
-    int cash_to_distribute = int(give / n_receivers);
-    int left_over = give % n_receivers;
+    int cash_to_distribute = 0;
+    int left_over = 0;
+    if (n_receivers != 0)
+    {
+      cash_to_distribute = int(give / n_receivers);
+      left_over = give % n_receivers;
+    }
 
     cash[position] -= give;
     cash[position] += left_over;
