@@ -3,37 +3,56 @@ ID: gabriel127
 PROG: friday
 LANG: C++
 */
-#include <iostream>
 #include <fstream>
-#include <stdio.h>
+#include <features.h>
 #include <stdlib.h>
-#include <string.h>
-#include <assert.h>
+#include <string>
+#include <cstring>
+#include <iostream>
+
 using namespace std;
 
-int mtab[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+bool isLeap(int year)
+{
+  if (year % 100 == 0)
+    return year % 400 == 0;
+  else
+    return year % 4 == 0;
+}
 
 int main()
 {
-  int ndow[7];
+
   ofstream fout("friday.out");
   ifstream fin("friday.in");
-  int n;
-  fin >> n;
-  int dow = 0; /* day of week: January 13, 1900 was a Saturday = 0 */
-  for (int y = 1900; y < 1900 + n; y++)
+
+  string input;
+  fin >> input;
+  int period = atoi(input.c_str());
+
+  int calendarDay = 0;
+  int freq[7] = {0, 0, 0, 0, 0, 0, 0};
+  int normDays[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  int leapDays[12] = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+  for (int year = 1900; year < 1900 + period; year++)
   {
-    for (int m = 0; m < 12; m++)
+    for (int month = 0; month < 12; month++)
     {
-      ndow[dow]++;
-      int leap = m == 1 && y % 4 == 0 && (y % 100 != 0 || y % 400 == 0);
-      dow = (dow + mtab[m] + leap) % 7;
+      int weekday = (calendarDay + 12) % 7;
+      freq[(weekday + 2) % 7]++;
+      calendarDay += isLeap(year) ? leapDays[month] : normDays[month];
     }
   }
-  for (int i = 0; i < 6; i++)
+
+  for (int i = 0; i < 7; i++)
   {
-    fout << ndow[i] + " ";
+    fout << freq[i];
+    if (i == 6)
+      fout << endl;
+    else
+      fout << " ";
   }
-  fout << ndow[6] << endl;
-  exit(0);
+
+  return 0;
 }
